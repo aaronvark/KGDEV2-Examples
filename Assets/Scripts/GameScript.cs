@@ -2,17 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This class does nothing, but serves as an example of how any script in your game
+//might contain a public reference of your own Data types
 public class GameScript : MonoBehaviour {
-
 	public Data myData;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
