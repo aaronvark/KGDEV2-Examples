@@ -8,6 +8,10 @@ using UnityEditor;
 //Links the GameScript class to this editor (GameScriptInspector)
 [CustomEditor(typeof(GameScript))]
 public class GameScriptInspector : Editor {
+	//Controls the size of a custom window in the SceneView
+	static Rect windowRect = new Rect (20, 20, 100, 100);
+	GameScript targetObject;
+
 	public override void OnInspectorGUI ()
 	{
 		//get the latest state of the object we are an editor for (an instance of GameScript)
@@ -25,6 +29,74 @@ public class GameScriptInspector : Editor {
 
 		//Apply whatever changed to the GameScript instance, (input fields edited, dragging things onto public properties, etc.)
 		serializedObject.ApplyModifiedProperties ();
+	}
+
+	//This function gets called when the SceneView is rendered
+	void OnSceneGUI() {
+		//convert our target to a GameScript reference (this works because we are a CustomEditor(typeof(GameScript)))
+		GameScript gameScriptTarget = target as GameScript;
+
+		//Normal GUI doesn't work in the Scene View
+		GUILayout.Label ("Dit werkt volgens mij niet.");
+
+		//We can make a new window inside of it, and there normal GUI does work
+		windowRect = GUI.Window (0, windowRect, TheWindowFunction, "Bovenaan");
+
+		//We can ask which Tool the user has selected, and perform actions based on this
+		switch (Tools.current) {
+		case Tool.Scale:
+			//The Handles class can create many UI-like interaction in 3D space for the Scene View
+			//like this button, but also Move or Rotation handles
+
+			//if (Handles.Button (Vector3.zero, Quaternion.identity, HandleUtility.GetHandleSize (Vector3.zero), 1f, Handles.CircleHandleCap)) {
+			if (Handles.Button (gameScriptTarget.transform.position, Quaternion.identity, 1f, 1f, Handles.CircleHandleCap)) {
+				Debug.Log ("Ingedrukt");
+			}
+			break;
+		}
+
+		//This is a hack to get rid of all the default tool controls
+		//when you want to do something else completely. You could also bind this
+		//to a specific button, like "press ` to go to our custom tool"
+		//Here we wait for somebody to press the Rect mode when this object is selected,
+		//then switch to the None tool
+		if (Tools.current == Tool.Rect) {
+			Tools.current = Tool.None;
+		}
+		//Once on the None tool, our custom tool code can take over
+		else if (Tools.current == Tool.None) {
+			//doe mijn eigen ding!
+			//This makes sure we can't deselect the object with mouse clicks or keyboard events
+			//to give us full control of what happens
+			HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+
+			//An example of a Cube movehandle that updates the target object's position
+			gameScriptTarget.transform.position = Handles.FreeMoveHandle (gameScriptTarget.transform.position, gameScriptTarget.transform.rotation, HandleUtility.GetHandleSize (gameScriptTarget.transform.position), Vector3.one, Handles.CubeHandleCap);
+		}
+	}
+
+	//The custom window function. It receives an id
+	//if you have more than one, you give each its own number, starting at 0
+	void TheWindowFunction( int id ) {
+		//Makes it so you can drag the window around
+		GUI.DragWindow ();
+
+		//Normal GUI works inside of this function
+		if (GUILayout.Button ("Knop")) {
+			//
+		}
+
+		//This makes sure that if the mouse is inside this box, we cannot click "through" it
+		//by using the current event. If we don't, the Scene View background will catch the mouse-click
+		//and deselect the object.
+		if (Event.current.isMouse) {
+			Event.current.Use ();
+		}
+	}
+
+	//This function gets called when the object is deselected
+	void OnDisable() {
+		//Debug.Log ("Editor disabled!");
 	}
 }
 

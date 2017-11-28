@@ -6,4 +6,8 @@ using UnityEngine;
 //might contain a public reference of your own Data types
 public class GameScript : MonoBehaviour {
 	public Data myData;
+
+	private void MyVeryPrivateFunction() {
+		Debug.Log ("Our intelligence has been stolen!");
+	}
 }
