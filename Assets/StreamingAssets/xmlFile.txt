@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="Windows-1252"?>
-<SerializableData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <name>Dit is makkelijk te editen! (echt niet)</name>
-  <someIntValue>9999</someIntValue>
-</SerializableData>
