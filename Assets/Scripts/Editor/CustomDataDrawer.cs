@@ -37,7 +37,7 @@ public class CustomDataDrawer : PropertyDrawer {
 
 	//should return how high the property will be (take into account foldouts!)
 	public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
-		return 2 * EditorGUIUtility.singleLineHeight;
+		return EditorGUIUtility.singleLineHeight * 2;
 	}
 
 	void MoveDown( float h, ref Rect position ) {

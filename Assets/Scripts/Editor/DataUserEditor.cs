@@ -16,7 +16,7 @@ public class DataUserEditor : Editor {
 		//DrawDefaultInspector();
 		//handy when you want a clean UI, by omitting certain standard items
 		DrawPropertiesExcluding( serializedObject, "m_Script");	//this is the script selection box
-
+		
 		//need this if we use the excluded properties
 		serializedObject.ApplyModifiedProperties();
 	}

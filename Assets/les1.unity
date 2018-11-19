@@ -141,9 +141,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    part: 2
-    textureAsset: {fileID: 10906, guid: 0000000000000000f000000000000000, type: 0}
-    position: {x: -0.87935996, y: 1.3177543, z: -0.36017394}
+    part: 4
+    textureAsset: {fileID: 0}
+    position: {x: -0.0895381, y: 0.8469519, z: 0.6348305}
 --- !u!4 &1217114886
 Transform:
   m_ObjectHideFlags: 0

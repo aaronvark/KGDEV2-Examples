@@ -15,7 +15,7 @@ public enum CharacterPart {
 //Note that if you omit this, Unity (assumes it) cannot display or serialize this data
 // - This doesn't mean it CAN be serialized (just that it should be)
 [System.Serializable]
-public class MyCustomData {
+public struct MyCustomData {
 	public CharacterPart part;
 	public Texture2D textureAsset;
 	[HideInInspector]
